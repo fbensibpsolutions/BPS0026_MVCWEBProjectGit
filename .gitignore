@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/BPS0026_MVC_WEB/.vs/BPS0026_MVC_WEB
+/BPS0026_MVC_WEB/BPS0026_MVC_WEB/bin
+/BPS0026_MVC_WEB/BPS0026_MVC_WEB/obj/Debug
