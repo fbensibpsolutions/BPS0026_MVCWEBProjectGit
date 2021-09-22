@@ -1,0 +1,40 @@
+﻿@model BPS0026_MVC_WEB.Models.Order
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="~/Content/OrderCss.css" rel="stylesheet" />
+</head>
+<body>
+    <h2>Edit Customer</h2>
+    @using (Html.BeginForm("SubmitEditData", "Home"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+        <table>
+            <tr>
+                <td>Order No.</td>
+                <td>Customer Name</td>
+                <td>Order Date</td>
+                <td>Total Amount</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="no" value="@Model.No" placeholder="Order No" required />
+                </td>
+                <td>
+                    <input type="text" name="customername" value="@Model.CustomerName" placeholder="Customer Name" required />
+                </td>
+                <td>
+                    <input type="text" name="date" value="@Model.Date" placeholder="Date" required />
+                </td>
+                <td>
+                    <input type="number" name="amount" value="@Model.Amount" placeholder="Amount" required />
+                </td>
+            </tr>
+        </table>
+        <br />
+        <input type="submit" value="Edit" />
+    }
+</body>
+</html>

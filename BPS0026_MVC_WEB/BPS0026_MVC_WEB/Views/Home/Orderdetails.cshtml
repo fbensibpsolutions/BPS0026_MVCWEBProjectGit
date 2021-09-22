@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BPS0026_MVC_WEB.Models.OrderModel>
+﻿@model BPS0026_MVC_WEB.Models.Order
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,20 +17,17 @@
             <td>Order Date</td>
             <td>Total Amount</td>
         </tr>
-        @foreach (var order in Model)
-        {
-            <tr>
-                <td>@order.No</td>
-                <td>@order.CustomerName</td>
-                <td>@order.Date</td>
-                <td><b>@order.Amount</b></td>
-            </tr>
-        }
+        <tr>
+            <td>@Html.DisplayFor(Model => Model.No)</td>
+            <td>@Html.DisplayFor(Model => Model.CustomerName)</td>
+            <td>@Html.DisplayFor(Model => Model.Date)</td>
+            <td><b>@Html.DisplayFor(Model => Model.Amount)</b></td>
+        </tr>
     </table>
 
     <script>
     document.querySelector('.returnHome').addEventListener('click', event => {
-        location.href = "@Url.Action("Index","Home")";
+        location.href = "@Url.Action("CustomerHome", "Home")";
     });
     </script>
 </body>

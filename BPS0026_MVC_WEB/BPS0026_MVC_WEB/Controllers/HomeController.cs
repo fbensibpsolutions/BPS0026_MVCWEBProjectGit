@@ -1,7 +1,10 @@
-﻿using BPS0026_MVC_WEB.Models;
+﻿using BPS0026_MVC_WEB.Context;
+using BPS0026_MVC_WEB.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -9,86 +12,99 @@ namespace BPS0026_MVC_WEB.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private OrderContext db = new OrderContext();
+
+        public ActionResult CustomerHome()
         {
-            List<OrderModel> orderList = new List<OrderModel>();
-
-            orderList = OrderDetailsData();
-
-            return View(orderList);
+            return View(db.tbl_000_CustomerOrder.ToList());
         }
 
-        public ActionResult Orderdetails(string no)
+
+        public ActionResult Orderdetails(int? id, string no)
         {
             ViewData["no"] = no;
-
-            var data = OrderDetailsData().FirstOrDefault(x => x.No == no);
-
-            var orderdetailsdatas = new List<OrderModel>();
-
-            orderdetailsdatas.Add(new OrderModel
+            if (id == null)
             {
-                No = data.No,
-                CustomerName = data.CustomerName,
-                Date = data.Date,
-                Amount = data.Amount
-            });
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-            return View(orderdetailsdatas);
+            Order orders = db.tbl_000_CustomerOrder.Find(id);
+            if (orders == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(orders);
         }
 
-
-        public List<OrderModel> OrderDetailsData()
+        public ActionResult AddCustomer()
         {
-            var orders = new List<OrderModel>();
-
-            orders.Add(new OrderModel
-            {
-                No = "OD-1",
-                CustomerName = "Test-1",
-                Date = DateTime.Now.ToString("MM/dd/yyyy"),
-                Amount = 1000
-            });
-            orders.Add(new OrderModel
-            {
-                No = "OD-2",
-                CustomerName = "Test-2",
-                Date = DateTime.Now.ToString("MM/dd/yyyy"),
-                Amount = 1050
-            });
-
-            orders.Add(new OrderModel
-            {
-                No = "OD-3",
-                CustomerName = "Test-3",
-                Date = DateTime.Now.ToString("MM/dd/yyyy"),
-                Amount = 1050
-            });
-
-            orders.Add(new OrderModel
-            {
-                No = "OD-4",
-                CustomerName = "Test-4",
-                Date = DateTime.Now.ToString("MM/dd/yyyy"),
-                Amount = 1050
-            });
-
-            return orders;
-        }
-
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveCustomer([Bind(Include = "no,customername, date,amount")] Order orderModel)
         {
-            ViewBag.Message = "Your contact page.";
+            if (ModelState.IsValid)
+            {
+                db.tbl_000_CustomerOrder.Add(orderModel);
+                db.SaveChangesAsync();
+                return Redirect("CustomerHome");
+            }
+            return View(orderModel);
+        }
 
-            return View();
+
+        public ActionResult EditCustomer(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order orderModel = db.tbl_000_CustomerOrder.Find(id);
+            if (orderModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(orderModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitEditData([Bind(Include = "Id,no,customername, date,amount")] Order orderModel)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(orderModel).State = EntityState.Modified;
+                db.SaveChangesAsync();
+                return Redirect("CustomerHome");
+            }
+            return View(orderModel);
+        }
+        public ActionResult DeleteCustomer(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order orderModel = db.tbl_000_CustomerOrder.Find(id);
+            if (orderModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(orderModel);
+        }
+
+        //[HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Order orderModel = db.tbl_000_CustomerOrder.Find(id);
+            db.tbl_000_CustomerOrder.Remove(orderModel);
+            db.SaveChanges();
+            return Redirect("CustomerHome");
         }
     }
 }
