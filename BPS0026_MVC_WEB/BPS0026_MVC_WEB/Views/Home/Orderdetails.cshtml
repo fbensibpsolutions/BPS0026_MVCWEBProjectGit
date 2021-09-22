@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<BPS0026_MVC_WEB.Models.Order>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +7,8 @@
 </head>
 <body>
 
+    <input type="button" value="Return Home" class="returnHome" />
+    <h2>@ViewData["no"]</h2>
     <table>
         <tr>
             <td>Order No.</td>
@@ -18,17 +19,18 @@
         @foreach (var order in Model)
         {
             <tr>
-                <td>
-                    @using (Html.BeginForm("Orderdetails", "Home"))
-                    {
-                        <input type="submit" name="no" value="@order.No" />
-                    }
-                </td>
-                <td>@order.CustomerName.</td>
+                <td>@order.No</td>
+                <td>@order.CustomerName</td>
                 <td>@order.Date</td>
                 <td><b>@order.Amount</b></td>
             </tr>
         }
     </table>
+
+    <script>
+    document.querySelector('.returnHome').addEventListener('click', event => {
+        location.href = "@Url.Action("Index","Home")";
+    });
+    </script>
 </body>
 </html>
