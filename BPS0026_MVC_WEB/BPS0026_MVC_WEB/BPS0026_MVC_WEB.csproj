@@ -132,15 +132,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202109230014448_InitialCreate.cs" />
-    <Compile Include="Migrations\202109230014448_InitialCreate.designer.cs">
-      <DependentUpon>202109230014448_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109230026141_CustomersTable.cs" />
-    <Compile Include="Migrations\202109230026141_CustomersTable.designer.cs">
-      <DependentUpon>202109230026141_CustomersTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customers.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -200,14 +191,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202109230014448_InitialCreate.resx">
-      <DependentUpon>202109230014448_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109230026141_CustomersTable.resx">
-      <DependentUpon>202109230026141_CustomersTable.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
