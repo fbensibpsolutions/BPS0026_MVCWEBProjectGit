@@ -14,5 +14,6 @@ namespace BPS0026_MVC_WEB.Models
         public string CustomerName { get; set; }
         public int Amount { get; set; }
 
+
     }
 }

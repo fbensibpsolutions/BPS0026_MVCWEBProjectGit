@@ -22,7 +22,7 @@ namespace BPS0026_MVC_WEB.Context
 
             modelBuilder.Entity<Customer>().Property(c => c.No).IsMaxLength();
 
-            modelBuilder.Entity<Customer>().Property(c => c.Date);
+            modelBuilder.Entity<Customer>().Property(c => c.Date).HasColumnType("datetime2");
 
             modelBuilder.Entity<Customer>().Property(c => c.CustomerName).HasMaxLength(50);
 
