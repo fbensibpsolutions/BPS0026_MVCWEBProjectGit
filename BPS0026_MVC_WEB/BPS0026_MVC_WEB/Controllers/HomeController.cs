@@ -29,13 +29,13 @@ namespace BPS0026_MVC_WEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Customers Customer = db.Tbl_000_Customer.Find(customerid);
-            if (Customer == null)
+            Customer Customers = db.Tbl_000_Customer.Find(customerid);
+            if (Customers == null)
             {
                 return HttpNotFound();
             }
 
-            return View(Customer);
+            return View(Customers);
         }
 
         public ActionResult AddCustomer()
@@ -45,15 +45,15 @@ namespace BPS0026_MVC_WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveCustomer([Bind(Include = "no,customername, date,amount")] Customers Customer)
+        public ActionResult SaveCustomer([Bind(Include = "no,customername, date,amount")] Customer Customers)
         {
             if (ModelState.IsValid)
             {
-                db.Tbl_000_Customer.Add(Customer);
+                db.Tbl_000_Customer.Add(Customers);
                 db.SaveChangesAsync();
                 return Redirect("CustomerHome");
             }
-            return View(Customer);
+            return View(Customers);
         }
 
 
@@ -63,25 +63,25 @@ namespace BPS0026_MVC_WEB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customers Customer = db.Tbl_000_Customer.Find(customerid);
-            if (Customer == null)
+            Customer Customers = db.Tbl_000_Customer.Find(customerid);
+            if (Customers == null)
             {
                 return HttpNotFound();
             }
-            return View(Customer);
+            return View(Customers);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitEditData([Bind(Include = "customerid,no,customername, date,amount")] Customers Customer)
+        public ActionResult SubmitEditData([Bind(Include = "customerid,no,customername, date,amount")] Customer Customers)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(Customer).State = EntityState.Modified;
+                db.Entry(Customers).State = EntityState.Modified;
                 db.SaveChangesAsync();
                 return Redirect("CustomerHome");
             }
-            return View(Customer);
+            return View(Customers);
         }
         public ActionResult DeleteCustomer(int? customerid)
         {
@@ -89,12 +89,12 @@ namespace BPS0026_MVC_WEB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customers Customer = db.Tbl_000_Customer.Find(customerid);
-            if (Customer == null)
+            Customer Customers = db.Tbl_000_Customer.Find(customerid);
+            if (Customers == null)
             {
                 return HttpNotFound();
             }
-            return View(Customer);
+            return View(Customers);
         }
 
         //[HttpPost, ActionName("Delete")]
@@ -102,8 +102,8 @@ namespace BPS0026_MVC_WEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int customerid)
         {
-            Customers Customer = db.Tbl_000_Customer.Find(customerid);
-            db.Tbl_000_Customer.Remove(Customer);
+            Customer Customers = db.Tbl_000_Customer.Find(customerid);
+            db.Tbl_000_Customer.Remove(Customers);
             db.SaveChanges();
             return Redirect("CustomerHome");
         }

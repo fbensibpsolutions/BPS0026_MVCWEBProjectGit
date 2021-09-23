@@ -10,22 +10,23 @@ namespace BPS0026_MVC_WEB.Context
 {
     public class CustomerContext : DbContext
     {
-        public DbSet<Customers> Tbl_000_Customer { get; set; }
+        public DbSet<Customer> Tbl_000_Customer { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Customer>().ToTable("Customers");
             //pk customerid
-            modelBuilder.Entity<Customers>().HasKey(c => c.CustomerId);
+            modelBuilder.Entity<Customer>().HasKey(c => c.CustomerId);
             //Identiy key for the customer id
-            modelBuilder.Entity<Customers>().Property(c => c.CustomerId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<Customer>().Property(c => c.CustomerId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
-            modelBuilder.Entity<Customers>().Property(c => c.No).IsMaxLength();
+            modelBuilder.Entity<Customer>().Property(c => c.No).IsMaxLength();
 
-            modelBuilder.Entity<Customers>().Property(c => c.Date).HasMaxLength(10);
+            modelBuilder.Entity<Customer>().Property(c => c.Date);
 
-            modelBuilder.Entity<Customers>().Property(c => c.CustomerName).HasMaxLength(50);
+            modelBuilder.Entity<Customer>().Property(c => c.CustomerName).HasMaxLength(50);
 
-            modelBuilder.Entity<Customers>().Property(c => c.Amount);
+            modelBuilder.Entity<Customer>().Property(c => c.Amount);
 
             base.OnModelCreating(modelBuilder);
         }
