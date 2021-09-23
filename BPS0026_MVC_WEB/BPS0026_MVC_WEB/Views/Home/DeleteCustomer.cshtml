@@ -1,0 +1,40 @@
+﻿@model BPS0026_MVC_WEB.Models.Customers
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="~/Content/OrderCss.css" rel="stylesheet" />
+</head>
+<body>
+    <h2>Delete Customer</h2>
+    @using (Html.BeginForm("DeleteConfirmed", "Home"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.CustomerId)
+        <table>
+            <tr>
+                <td>Order No.</td>
+                <td>Customer Name</td>
+                <td>Order Date</td>
+                <td>Total Amount</td>
+            </tr>
+            <tr>
+                <td>
+                    @Model.No
+                </td>
+                <td>
+                    @Model.CustomerName
+                </td>
+                <td>
+                    @Model.Date
+                </td>
+                <td>
+                    @Model.Amount
+                </td>
+            </tr>
+        </table>
+        <br />
+        <input type="submit" value="Delete" />
+    }
+</body>
+</html>
