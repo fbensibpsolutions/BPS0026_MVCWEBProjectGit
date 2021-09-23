@@ -1,0 +1,42 @@
+﻿@model IEnumerable<BPS0026_MVC_WEB.Models.Customer>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="~/Content/OrderCss.css" rel="stylesheet" />
+</head>
+<body>
+    <h2>Customer Lists</h2>
+    <table>
+        <tr>
+            <td>Order No.</td>
+            <td>Customer Name</td>
+            <td>Order Date</td>
+            <td>Total Amount</td>
+            <td></td>
+        </tr>
+        @foreach (var customer in Model)
+        {
+                if (customer.CustomerId > 0)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(customer.No, "Orderdetails", new { customerid = customer.CustomerId, no = customer.No })
+                        </td>
+                        <td>@customer.CustomerName.</td>
+                        <td>@customer.Date</td>
+                        <td><b>@customer.Amount</b></td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditCustomer", new { customerid = customer.CustomerId })
+                            |
+                            @Html.ActionLink("Delete", "DeleteCustomer", new { customerid = customer.CustomerId })
+                        </td>
+
+                    </tr>
+                }
+
+        }
+    </table>
+</body>
+</html>

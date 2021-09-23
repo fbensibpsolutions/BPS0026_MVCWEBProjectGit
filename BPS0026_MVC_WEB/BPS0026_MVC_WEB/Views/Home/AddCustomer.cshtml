@@ -1,0 +1,40 @@
+﻿@model BPS0026_MVC_WEB.Models.Customer
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="~/Content/OrderCss.css" rel="stylesheet" />
+</head>
+<body>
+    <h2>Create New Customer</h2>
+    @using (Html.BeginForm("SaveCustomer", "Home"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "")
+        <table>
+            <tr>
+                <td>Order No.</td>
+                <td>Customer Name</td>
+                <td>Order Date</td>
+                <td>Total Amount</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="no" placeholder="Order No" required />
+                </td>
+                <td>
+                    <input type="text" name="customername" placeholder="Customer Name" required />
+                </td>
+                <td>
+                    <input type="date" name="date" placeholder="Date" required />
+                </td>
+                <td>
+                    <input type="number" name="amount" placeholder="Amount" required />
+                </td>
+            </tr>
+        </table>
+        <br />
+        <input type="submit" value="Save" />
+    }
+</body>
+</html>

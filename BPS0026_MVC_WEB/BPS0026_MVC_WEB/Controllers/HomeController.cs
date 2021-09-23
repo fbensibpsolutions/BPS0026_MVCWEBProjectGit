@@ -1,7 +1,10 @@
-﻿using BPS0026_MVC_WEB.Models;
+﻿using BPS0026_MVC_WEB.Context;
+using BPS0026_MVC_WEB.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -9,71 +12,100 @@ namespace BPS0026_MVC_WEB.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+
+        public CustomerContext db = new CustomerContext();
+
+        public ActionResult CustomerHome()
         {
-            List<Order> orderList = new List<Order>();
-
-            orderList = OrderDetailsData();
-
-            return View(orderList);
+            return View(db.Tbl_000_Customer.ToList());
         }
 
-        public ActionResult Orderdetails(string no)
+
+        public ActionResult Orderdetails(int? customerid, string no)
         {
             ViewData["no"] = no;
-
-            var data = OrderDetailsData().FirstOrDefault(x => x.No == no);
-
-            var orderdetailsdatas = new List<Order>();
-
-            orderdetailsdatas.Add(new Order
+            if (customerid == null)
             {
-                No = data.No,
-                CustomerName = data.CustomerName,
-                Date = data.Date,
-                Amount = data.Amount
-            });
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-            return View(orderdetailsdatas);
+            Customer Customers = db.Tbl_000_Customer.Find(customerid);
+            if (Customers == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(Customers);
+        }
+
+        public ActionResult AddCustomer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveCustomer([Bind(Include = "no,customername, date,amount")] Customer Customers)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Tbl_000_Customer.Add(Customers);
+                db.SaveChangesAsync();
+                return Redirect("CustomerHome");
+            }
+            return View(Customers);
         }
 
 
-        public List<Order> OrderDetailsData()
+        public ActionResult EditCustomer(int? customerid)
         {
-            var orders = new List<Order>();
-
-            orders.Add(new Order
+            if (customerid == null)
             {
-                No = "OD-1",
-                CustomerName = "Test-1",
-                Date = DateTime.Now.ToString("MM/dd/yyyy"),
-                Amount = 1000
-            });
-            orders.Add(new Order
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer Customers = db.Tbl_000_Customer.Find(customerid);
+            if (Customers == null)
             {
-                No = "OD-2",
-                CustomerName = "Test-2",
-                Date = DateTime.Now.ToString("MM/dd/yyyy"),
-                Amount = 1050
-            });
+                return HttpNotFound();
+            }
+            return View(Customers);
+        }
 
-            orders.Add(new Order
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitEditData([Bind(Include = "customerid,no,customername, date,amount")] Customer Customers)
+        {
+            if (ModelState.IsValid)
             {
-                No = "OD-3",
-                CustomerName = "Test-3",
-                Date = DateTime.Now.ToString("MM/dd/yyyy"),
-                Amount = 1050
-            });
-
-            orders.Add(new Order
+                db.Entry(Customers).State = EntityState.Modified;
+                db.SaveChangesAsync();
+                return Redirect("CustomerHome");
+            }
+            return View(Customers);
+        }
+        public ActionResult DeleteCustomer(int? customerid)
+        {
+            if (customerid == null)
             {
-                No = "OD-4",
-                CustomerName = "Test-4",
-                Date = DateTime.Now.ToString("MM/dd/yyyy"),
-                Amount = 1050
-            });
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer Customers = db.Tbl_000_Customer.Find(customerid);
+            if (Customers == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Customers);
+        }
 
-            return orders;
+        //[HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int customerid)
+        {
+            Customer Customers = db.Tbl_000_Customer.Find(customerid);
+            db.Tbl_000_Customer.Remove(Customers);
+            db.SaveChanges();
+            return Redirect("CustomerHome");
         }
     }
 }

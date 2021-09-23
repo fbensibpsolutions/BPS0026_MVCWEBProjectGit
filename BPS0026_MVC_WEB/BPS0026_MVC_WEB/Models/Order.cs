@@ -7,9 +7,10 @@ namespace BPS0026_MVC_WEB.Models
 {
     public class Order
     {
-        public string No { get; set; }
-        public string Date { get; set; }
-        public string CustomerName { get; set; }
-        public int Amount { get; set; }
+        public int OrderId { get; set; }
+        public string OrderItem { get; set; }
+        public int Quantity { get; set; }
+        public double Price { get; set; }
+
     }
 }
