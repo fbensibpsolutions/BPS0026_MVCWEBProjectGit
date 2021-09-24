@@ -136,9 +136,12 @@
     <Compile Include="Migrations\202109230506549_Add_Customers.designer.cs">
       <DependentUpon>202109230506549_Add_Customers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109230704350_Add_Orders.cs" />
+    <Compile Include="Migrations\202109230704350_Add_Orders.designer.cs">
+      <DependentUpon>202109230704350_Add_Orders.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +149,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -154,11 +158,13 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\OrderCss.css" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\DataTable.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -200,6 +206,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202109230506549_Add_Customers.resx">
       <DependentUpon>202109230506549_Add_Customers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109230704350_Add_Orders.resx">
+      <DependentUpon>202109230704350_Add_Orders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

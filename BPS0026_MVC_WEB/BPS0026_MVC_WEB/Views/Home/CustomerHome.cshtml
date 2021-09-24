@@ -4,20 +4,22 @@
 <html>
 <head>
     <title></title>
-    <link href="~/Content/OrderCss.css" rel="stylesheet" />
 </head>
 <body>
     <h2>Customer Lists</h2>
-    <table>
-        <tr>
-            <td>Order No.</td>
-            <td>Customer Name</td>
-            <td>Order Date</td>
-            <td>Total Amount</td>
-            <td></td>
-        </tr>
-        @foreach (var customer in Model)
-        {
+    <table id="CustomersListTable">
+        <thead>
+            <tr>
+                <td>Order No.</td>
+                <td>Customer Name</td>
+                <td>Order Date</td>
+                <td>Total Amount</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
                 if (customer.CustomerId > 0)
                 {
                     <tr>
@@ -36,7 +38,8 @@
                     </tr>
                 }
 
-        }
+            }
+        </tbody>
     </table>
 </body>
 </html>

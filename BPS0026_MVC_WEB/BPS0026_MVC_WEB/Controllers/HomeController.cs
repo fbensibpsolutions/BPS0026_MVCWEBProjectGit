@@ -1,11 +1,8 @@
 ﻿using BPS0026_MVC_WEB.Context;
 using BPS0026_MVC_WEB.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BPS0026_MVC_WEB.Controllers
@@ -24,18 +21,19 @@ namespace BPS0026_MVC_WEB.Controllers
         public ActionResult Orderdetails(int? customerid, string no)
         {
             ViewData["no"] = no;
+
             if (customerid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var orders = db.Tbl_000_Order.ToList().Where(x=>x.CustomerId == customerid);
 
-            Customer Customers = db.Tbl_000_Customer.Find(customerid);
-            if (Customers == null)
+            if (orders == null)
             {
                 return HttpNotFound();
             }
 
-            return View(Customers);
+            return View(orders);
         }
 
         public ActionResult AddCustomer()
@@ -83,6 +81,7 @@ namespace BPS0026_MVC_WEB.Controllers
             }
             return View(Customers);
         }
+       
         public ActionResult DeleteCustomer(int? customerid)
         {
             if (customerid == null)
