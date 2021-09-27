@@ -26,9 +26,6 @@ namespace BPS0026_MVC_WEB.Context
 
             modelBuilder.Entity<Customer>().Property(c => c.CustomerName).HasMaxLength(50);
 
-            modelBuilder.Entity<Customer>().Property(c => c.Amount);
-
-
 
 
             modelBuilder.Entity<Order>().ToTable("Orders");
@@ -37,13 +34,11 @@ namespace BPS0026_MVC_WEB.Context
             //Identiy key for the customer id
             modelBuilder.Entity<Order>().Property(o => o.OrderId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
-            modelBuilder.Entity<Order>().Property(o => o.Item).HasMaxLength(50);
+            modelBuilder.Entity<Order>().Property(o => o.No).IsMaxLength();
+            
+            modelBuilder.Entity<Order>().Property(o => o.Amount);
 
             modelBuilder.Entity<Order>().Property(o => o.Date).HasColumnType("datetime2");
-
-            modelBuilder.Entity<Order>().Property(o => o.Quantity);
-
-            modelBuilder.Entity<Order>().Property(o => o.Price).HasColumnType("float");
 
             //one to many relationship
             modelBuilder.Entity<Order>().HasRequired<Customer>(b => b.Customers).WithMany(a => a.Orders).HasForeignKey<int>(b => b.CustomerId);

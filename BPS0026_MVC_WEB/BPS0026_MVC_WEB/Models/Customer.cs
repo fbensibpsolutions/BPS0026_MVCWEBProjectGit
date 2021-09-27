@@ -10,7 +10,6 @@ namespace BPS0026_MVC_WEB.Models
         public string No { get; set; }
         public DateTime Date { get; set; }
         public string CustomerName { get; set; }
-        public int Amount { get; set; }
 
         //reverse navigation property
         public virtual ICollection<Order> Orders { get; set; }
@@ -21,10 +20,9 @@ namespace BPS0026_MVC_WEB.Models
     {
        //primary key
         public int OrderId { get; set; }
-        public string Item { get; set; }
+        public string No { get; set; }
         public DateTime Date { get; set; }
-        public int Quantity { get; set; }
-        public double Price { get; set; }
+        public int Amount { get; set; }
 
 
         //navigation property

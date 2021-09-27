@@ -3,19 +3,29 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Add_Orders : DbMigration
+    public partial class Customers : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Customers",
+                c => new
+                    {
+                        CustomerId = c.Int(nullable: false, identity: true),
+                        No = c.String(),
+                        Date = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        CustomerName = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.CustomerId);
+            
             CreateTable(
                 "dbo.Orders",
                 c => new
                     {
                         OrderId = c.Int(nullable: false, identity: true),
-                        Item = c.String(maxLength: 50),
+                        No = c.String(),
                         Date = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
-                        Quantity = c.Int(nullable: false),
-                        Price = c.Double(nullable: false),
+                        Amount = c.Int(nullable: false),
                         CustomerId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.OrderId)
@@ -29,6 +39,7 @@
             DropForeignKey("dbo.Orders", "CustomerId", "dbo.Customers");
             DropIndex("dbo.Orders", new[] { "CustomerId" });
             DropTable("dbo.Orders");
+            DropTable("dbo.Customers");
         }
     }
 }

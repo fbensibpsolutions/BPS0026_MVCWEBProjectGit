@@ -1,6 +1,7 @@
 ﻿using BPS0026_MVC_WEB.Context;
 using BPS0026_MVC_WEB.Models;
 using System.Data.Entity;
+using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -12,38 +13,15 @@ namespace BPS0026_MVC_WEB.Controllers
 
         public CustomerContext db = new CustomerContext();
 
+        //Customer
         public ActionResult CustomerHome()
         {
             return View(db.Tbl_000_Customer.ToList());
         }
 
-
-        public ActionResult Orderdetails(int? customerid, string no)
-        {
-            ViewData["no"] = no;
-
-            if (customerid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var orders = db.Tbl_000_Order.ToList().Where(x=>x.CustomerId == customerid);
-
-            if (orders == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(orders);
-        }
-
-        public ActionResult AddCustomer()
-        {
-            return View();
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveCustomer([Bind(Include = "no,customername, date,amount")] Customer Customers)
+        public ActionResult SaveCustomer([Bind(Include = "no,customername, date")] Customer Customers)
         {
             if (ModelState.IsValid)
             {
@@ -53,7 +31,6 @@ namespace BPS0026_MVC_WEB.Controllers
             }
             return View(Customers);
         }
-
 
         public ActionResult EditCustomer(int? customerid)
         {
@@ -71,7 +48,7 @@ namespace BPS0026_MVC_WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitEditData([Bind(Include = "customerid,no,customername, date,amount")] Customer Customers)
+        public ActionResult ConfirmedEditCustomer([Bind(Include = "customerid,no,customername, date")] Customer Customers)
         {
             if (ModelState.IsValid)
             {
@@ -99,12 +76,59 @@ namespace BPS0026_MVC_WEB.Controllers
         //[HttpPost, ActionName("Delete")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int customerid)
+        public ActionResult ConfirmedDeleteCustomer(int customerid)
         {
             Customer Customers = db.Tbl_000_Customer.Find(customerid);
             db.Tbl_000_Customer.Remove(Customers);
             db.SaveChanges();
             return Redirect("CustomerHome");
         }
+
+        //Order
+        public ActionResult OrderHome()
+        {
+
+            dynamic dynamicModel = new ExpandoObject();
+
+            dynamicModel.CustomerList = db.Tbl_000_Customer.ToList();
+            dynamicModel.OrderList = db.Tbl_000_Order.ToList();
+
+            return View(dynamicModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveOrder([Bind(Include = "no,customerid, date, amount")] Order Orders)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Tbl_000_Order.Add(Orders);
+                db.SaveChangesAsync();
+                return Redirect("OrderHome");
+            }
+            return View(Orders);
+        }
+
+        public ActionResult Orderdetails(int? customerid, string no)
+        {
+            dynamic dynamicModel = new ExpandoObject();
+
+            ViewData["no"] = no;
+
+            if (customerid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            dynamicModel.ordersDetailsList = db.Tbl_000_Order.ToList().Where(x => x.No == no && x.CustomerId == customerid);
+
+            if (dynamicModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(dynamicModel);
+        }
+
     }
 }

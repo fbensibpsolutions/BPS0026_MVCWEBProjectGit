@@ -1,4 +1,12 @@
 ﻿$(document).ready(function () {
-    $('#orderDetailsTable').DataTable();
-    $('#CustomersListTable').DataTable();
+    $('#OrderListTable').DataTable();
+
+    var customersTable = $('#CustomersListTable').DataTable();
+
+    $("#FilterCustomerName").on("change", function () {
+        customersTable
+            .search($(this).val())
+            .draw();
+    });
+
 });

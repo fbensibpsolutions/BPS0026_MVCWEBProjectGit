@@ -6,16 +6,16 @@
 </head>
 <body>
     <h2>Edit Customer</h2>
-    @using (Html.BeginForm("SubmitEditData", "Home"))
+    @using (Html.BeginForm("ConfirmedEditCustomer", "Home"))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.CustomerId)
         <table>
             <tr>
-                <td>Order No.</td>
+                <td>Customer No.</td>
                 <td>Customer Name</td>
-                <td>Order Date</td>
-                <td>Total Amount</td>
+                <td>Date</td>
+                <td></td>
             </tr>
             <tr>
                 <td>
@@ -26,9 +26,6 @@
                 </td>
                 <td>
                     <input type="text" name="date" value="@Model.Date" placeholder="Date" required />
-                </td>
-                <td>
-                    <input type="number" name="amount" value="@Model.Amount" placeholder="Amount" required />
                 </td>
             </tr>
         </table>

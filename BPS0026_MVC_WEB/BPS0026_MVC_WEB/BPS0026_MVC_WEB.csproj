@@ -132,13 +132,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202109230506549_Add_Customers.cs" />
-    <Compile Include="Migrations\202109230506549_Add_Customers.designer.cs">
-      <DependentUpon>202109230506549_Add_Customers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109230704350_Add_Orders.cs" />
-    <Compile Include="Migrations\202109230704350_Add_Orders.designer.cs">
-      <DependentUpon>202109230704350_Add_Orders.cs</DependentUpon>
+    <Compile Include="Migrations\202109240649102_Customers.cs" />
+    <Compile Include="Migrations\202109240649102_Customers.designer.cs">
+      <DependentUpon>202109240649102_Customers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -182,10 +178,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\DeleteCustomer.cshtml" />
-    <Content Include="Views\Home\AddCustomer.cshtml" />
     <Content Include="Views\Home\CustomerHome.cshtml" />
     <Content Include="Views\Home\Orderdetails.cshtml" />
     <Content Include="Views\Home\EditCustomer.cshtml" />
+    <Content Include="Views\Home\OrderHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -204,11 +200,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202109230506549_Add_Customers.resx">
-      <DependentUpon>202109230506549_Add_Customers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109230704350_Add_Orders.resx">
-      <DependentUpon>202109230704350_Add_Orders.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109240649102_Customers.resx">
+      <DependentUpon>202109240649102_Customers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

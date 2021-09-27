@@ -6,16 +6,15 @@
 </head>
 <body>
     <h2>Delete Customer</h2>
-    @using (Html.BeginForm("DeleteConfirmed", "Home"))
+    @using (Html.BeginForm("ConfirmedDeleteCustomer", "Home"))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.CustomerId)
         <table>
             <tr>
-                <td>Order No.</td>
+                <td>Customer No.</td>
                 <td>Customer Name</td>
-                <td>Order Date</td>
-                <td>Total Amount</td>
+                <td>Date</td>
             </tr>
             <tr>
                 <td>
@@ -26,9 +25,6 @@
                 </td>
                 <td>
                     @Model.Date
-                </td>
-                <td>
-                    @Model.Amount
                 </td>
             </tr>
         </table>

@@ -6,15 +6,77 @@
     <title></title>
 </head>
 <body>
-    <h2>Customer Lists</h2>
+    <h2>Customers List</h2>
+    <button type="submit" style="float:right;" class="btn btn-primary" data-toggle="modal" data-target="#CreateNewCustomer">+ Create</button>
+    <br /> <br />
+    @*Modal Create*@
+    <div class="modal fade" id="CreateNewCustomer" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New Customer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("SaveCustomer", "Home"))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Customer No</td>
+                                    <td>Customer Name</td>
+                                    <td>Date</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="text" name="no" placeholder="Customer No" required />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="CustomerName" placeholder="Customer Name" required />
+                                    </td>
+                                    <td>
+                                        <input type="date" name="date" placeholder="Date" required />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save customer</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @*customer List*@
+    <div style="float:right;" id="filterName">
+        <b>Filter By Name :</b>
+        <select id="FilterCustomerName">
+            <option value=""></option>
+            @foreach (var customer in Model)
+            {
+                if (customer.CustomerId > 0)
+                {
+                    <option value="@customer.CustomerName">@customer.CustomerName</option>
+                }
+            }
+        </select>
+    </div>
+
+    <br /><br />
     <table id="CustomersListTable">
         <thead>
             <tr>
-                <td>Order No.</td>
-                <td>Customer Name</td>
-                <td>Order Date</td>
-                <td>Total Amount</td>
-                <td></td>
+                <th>Customer No.</th>
+                <th>Customer Name</th>
+                <th>Date</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -24,22 +86,20 @@
                 {
                     <tr>
                         <td>
-                            @Html.ActionLink(customer.No, "Orderdetails", new { customerid = customer.CustomerId, no = customer.No })
+                            @customer.No
                         </td>
                         <td>@customer.CustomerName.</td>
                         <td>@customer.Date</td>
-                        <td><b>@customer.Amount</b></td>
                         <td>
                             @Html.ActionLink("Edit", "EditCustomer", new { customerid = customer.CustomerId })
                             |
                             @Html.ActionLink("Delete", "DeleteCustomer", new { customerid = customer.CustomerId })
                         </td>
-
                     </tr>
                 }
-
             }
         </tbody>
     </table>
+
 </body>
 </html>
