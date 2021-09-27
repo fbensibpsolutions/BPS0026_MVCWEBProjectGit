@@ -11,7 +11,7 @@ namespace BPS0026_MVC_WEB.Context
     public class CustomerContext : DbContext
     {
         public DbSet<Customer> Tbl_000_Customer { get; set; }
-
+        public DbSet<Order> Tbl_000_Order { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>().ToTable("Customers");
@@ -26,9 +26,25 @@ namespace BPS0026_MVC_WEB.Context
 
             modelBuilder.Entity<Customer>().Property(c => c.CustomerName).HasMaxLength(50);
 
-            modelBuilder.Entity<Customer>().Property(c => c.Amount);
+
+
+            modelBuilder.Entity<Order>().ToTable("Orders");
+            //pk OrderId
+            modelBuilder.Entity<Order>().HasKey(o => o.OrderId);
+            //Identiy key for the customer id
+            modelBuilder.Entity<Order>().Property(o => o.OrderId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            modelBuilder.Entity<Order>().Property(o => o.No).IsMaxLength();
+            
+            modelBuilder.Entity<Order>().Property(o => o.Amount);
+
+            modelBuilder.Entity<Order>().Property(o => o.Date).HasColumnType("datetime2");
+
+            //one to many relationship
+            modelBuilder.Entity<Order>().HasRequired<Customer>(b => b.Customers).WithMany(a => a.Orders).HasForeignKey<int>(b => b.CustomerId);
 
             base.OnModelCreating(modelBuilder);
+
         }
     }
 }

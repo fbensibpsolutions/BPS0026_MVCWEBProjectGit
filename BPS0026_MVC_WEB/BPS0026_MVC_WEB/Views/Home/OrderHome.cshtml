@@ -1,0 +1,96 @@
+﻿@using BPS0026_MVC_WEB.Models
+@model dynamic
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h2>Order List</h2>
+    <button type="submit" style="float:right;" class="btn btn-primary" data-toggle="modal" data-target="#CreateOrder">+ Create</button>
+    <br /> <br />
+    <div class="modal fade" id="CreateOrder" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("SaveOrder", "Home"))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <td>Order No</td>
+                                <td>
+                                    <input type="text" name="no" placeholder="Order No" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Customer Name</td>
+                                <td>
+                                    <select name="customerid">
+                                        @foreach (Customer customer in Model.CustomerList)
+                                        {
+                                            <option value="@customer.CustomerId">@customer.CustomerName</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Date</td>
+                                <td>
+                                    <input type="date" name="date" placeholder="Date" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Amount</td>
+                                <td>
+                                    <input type="number" name="amount" placeholder="Amount" required />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Order</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <table id="OrderListTable">
+        <thead>
+            <tr>
+                <th>Order No.</th>
+                <th>Date</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Order order in Model.OrderList)
+            {
+            <tr>
+                <td>
+                   @Html.ActionLink(order.No,"OrderDetails", new { customerid = order.CustomerId, no = order.No })
+                </td>
+                <td>
+                    @order.Date
+                </td>
+                <td>
+                    @order.Amount
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+</body>
+</html>

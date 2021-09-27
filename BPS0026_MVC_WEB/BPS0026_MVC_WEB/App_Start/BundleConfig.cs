@@ -9,7 +9,9 @@ namespace BPS0026_MVC_WEB
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-3.4.1.js",
+                        "~/Scripts/jquery.dataTables.min.js",
+                        "~/Scripts/DataTable.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -24,7 +26,9 @@ namespace BPS0026_MVC_WEB
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/OrderCss.css",
+                      "~/Content/jquery.dataTables.min.css"));
         }
     }
 }
